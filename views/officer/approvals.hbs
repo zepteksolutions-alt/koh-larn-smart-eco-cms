@@ -1,0 +1,34 @@
+{{> shell_top}}
+
+{{#if places.length}}
+<div class="grid-cards">
+  {{#each places}}
+  <div class="place-card">
+    <div class="pc-img" style="background-image:url('{{this.image}}')">
+      <span class="status pending">รออนุมัติ</span>
+    </div>
+    <div class="pc-body">
+      <span class="type-tag">{{typeLabel this.type}}</span>
+      <h3>{{this.name}}</h3>
+      <p class="muted"><span class="inline-ic">{{{icon "pin"}}}</span>{{this.area}}{{#if this.price}} · ฿{{money this.price}}/คืน{{/if}}</p>
+      <p class="muted">โดย: {{this.ownerName}}</p>
+      <div class="desc-wrap">
+        <p class="desc clamp">{{this.description}}</p>
+        <button type="button" class="more-link" onclick="toggleMore(this)" hidden>อ่านเพิ่มเติม</button>
+      </div>
+      <div class="approve-actions">
+        <form method="post" action="/officer/approvals/{{this.id}}/approve">
+          <button class="btn btn-teal sm" type="submit"><span class="btn-ic">{{{icon "check"}}}</span>อนุมัติ</button>
+        </form>
+        <button type="button" class="btn btn-danger sm" onclick="openReject('/officer/approvals/{{this.id}}/reject', '{{this.name}}', 'ไม่อนุมัติสถานที่')">ไม่อนุมัติ</button>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+{{else}}
+<div class="empty"><span class="empty-ic">{{{icon "check"}}}</span>ไม่มีคำขอรออนุมัติ</div>
+{{/if}}
+
+{{> reject_modal}}
+{{> shell_bottom}}

@@ -1,0 +1,43 @@
+{{> shell_top}}
+
+<form method="post" action="{{action}}" class="form-card">
+  <div class="field-row">
+    <label>หัวข้อข่าว</label>
+    <input class="field" name="title" value="{{item.title}}" placeholder="หัวข้อข่าว/ประกาศ" required>
+  </div>
+
+  <div class="two-col">
+    <div class="field-row">
+      <label>หมวดหมู่</label>
+      <select class="field" name="category">
+        <option value="city" {{#if (eq item.category 'city')}}selected{{/if}}>ประกาศเมือง</option>
+        <option value="utility" {{#if (eq item.category 'utility')}}selected{{/if}}>สาธารณูปโภค</option>
+        <option value="event" {{#if (eq item.category 'event')}}selected{{/if}}>กิจกรรม</option>
+      </select>
+    </div>
+    <div class="field-row">
+      <label>สถานะ</label>
+      <select class="field" name="status">
+        <option value="draft" {{#if (eq item.status 'draft')}}selected{{/if}}>ฉบับร่าง</option>
+        <option value="published" {{#if (eq item.status 'published')}}selected{{/if}}>เผยแพร่</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="field-row">
+    <label>เนื้อหา</label>
+    <textarea class="field" name="body" rows="5" placeholder="รายละเอียดข่าว" required>{{item.body}}</textarea>
+  </div>
+
+  <div class="field-row">
+    <label>ลิงก์รูปภาพ (URL)</label>
+    <input class="field" name="image" value="{{item.image}}" placeholder="https://...">
+  </div>
+
+  <div class="form-actions">
+    <a class="btn btn-ghost" href="/officer/news">ยกเลิก</a>
+    <button class="btn btn-teal" type="submit">บันทึก</button>
+  </div>
+</form>
+
+{{> shell_bottom}}

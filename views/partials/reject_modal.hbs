@@ -1,0 +1,27 @@
+<div class="modal-overlay" id="rejectModal">
+  <div class="modal">
+    <h3 id="rejectTitle">ไม่อนุมัติสถานที่</h3>
+    <p class="modal-sub" id="rejectName"></p>
+    <form method="post" id="rejectForm">
+      <label>เหตุผล</label>
+      <textarea class="field" name="reason" id="rejectReason" rows="3" placeholder="ระบุเหตุผลที่ไม่อนุมัติ / ยกเลิกการอนุมัติ" required></textarea>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" onclick="closeReject()">ยกเลิก</button>
+        <button type="submit" class="btn btn-danger">ยืนยัน</button>
+      </div>
+    </form>
+  </div>
+</div>
+<script>
+  function openReject(action, name, title){
+    document.getElementById('rejectForm').action = action;
+    document.getElementById('rejectTitle').textContent = title || 'ไม่อนุมัติสถานที่';
+    document.getElementById('rejectName').textContent = name ? ('สถานที่: ' + name) : '';
+    document.getElementById('rejectReason').value = '';
+    document.getElementById('rejectModal').classList.add('show');
+  }
+  function closeReject(){ document.getElementById('rejectModal').classList.remove('show'); }
+  document.getElementById('rejectModal').addEventListener('click', function(e){
+    if (e.target === this) closeReject();
+  });
+</script>

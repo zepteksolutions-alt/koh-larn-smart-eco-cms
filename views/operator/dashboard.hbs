@@ -1,0 +1,44 @@
+{{> shell_top}}
+
+<div class="stat-row">
+  <div class="stat-card"><div class="sc-n">{{stats.total}}</div><div class="sc-l">ทั้งหมด</div></div>
+  <div class="stat-card good"><div class="sc-n">{{stats.approved}}</div><div class="sc-l">อนุมัติแล้ว</div></div>
+  <div class="stat-card warn"><div class="sc-n">{{stats.pending}}</div><div class="sc-l">รออนุมัติ</div></div>
+  <div class="stat-card bad"><div class="sc-n">{{stats.rejected}}</div><div class="sc-l">ไม่อนุมัติ</div></div>
+</div>
+
+<div class="card-head">
+  <h2>รายการสถานที่ของฉัน</h2>
+  <a class="btn btn-teal" href="/operator/places/new">+ เพิ่มสถานที่</a>
+</div>
+
+{{#if places.length}}
+<div class="grid-cards">
+  {{#each places}}
+  <div class="place-card">
+    <div class="pc-img" style="background-image:url('{{this.image}}')">
+      <span class="status {{this.status}}">{{statusLabel this.status}}</span>
+    </div>
+    <div class="pc-body">
+      <span class="type-tag">{{typeLabel this.type}}</span>
+      <h3>{{this.name}}</h3>
+      <p class="muted"><span class="inline-ic">{{{icon "pin"}}}</span>{{this.area}}{{#if this.price}} · ฿{{money this.price}}/คืน{{/if}}</p>
+      <p class="desc">{{this.description}}</p>
+      {{#if (eq this.status 'rejected')}}
+        <div class="reject-note">เหตุผล: {{this.rejectReason}}</div>
+      {{/if}}
+      <div class="pc-actions">
+        <a class="btn btn-ghost sm" href="/operator/places/{{this.id}}/edit">แก้ไข</a>
+        <form method="post" action="/operator/places/{{this.id}}/delete" onsubmit="return confirm('ลบสถานที่นี้?')">
+          <button class="btn btn-danger sm" type="submit">ลบ</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+{{else}}
+<div class="empty">ยังไม่มีสถานที่ — กด “เพิ่มสถานที่” เพื่อเริ่มต้น</div>
+{{/if}}
+
+{{> shell_bottom}}

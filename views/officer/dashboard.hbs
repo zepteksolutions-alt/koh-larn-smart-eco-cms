@@ -1,0 +1,40 @@
+{{> shell_top}}
+
+<div class="stat-row">
+  <div class="stat-card warn"><div class="sc-n">{{stats.pending}}</div><div class="sc-l">รออนุมัติ</div></div>
+  <div class="stat-card good"><div class="sc-n">{{stats.approved}}</div><div class="sc-l">อนุมัติแล้ว</div></div>
+  <div class="stat-card"><div class="sc-n">{{stats.places}}</div><div class="sc-l">สถานที่ทั้งหมด</div></div>
+  <div class="stat-card teal"><div class="sc-n">{{stats.published}}</div><div class="sc-l">ข่าวเผยแพร่</div></div>
+</div>
+
+<div class="card-head">
+  <h2>คำขอรออนุมัติล่าสุด</h2>
+  <a class="btn btn-ghost sm" href="/officer/approvals">ดูทั้งหมด</a>
+</div>
+
+{{#if pending.length}}
+<div class="table-wrap">
+  <table class="tbl">
+    <thead><tr><th>สถานที่</th><th>ประเภท</th><th>ผู้ประกอบการ</th><th>พื้นที่</th><th></th></tr></thead>
+    <tbody>
+      {{#each pending}}
+      <tr>
+        <td><b>{{this.name}}</b></td>
+        <td><span class="type-tag">{{typeLabel this.type}}</span></td>
+        <td>{{this.ownerName}}</td>
+        <td class="muted">{{this.area}}</td>
+        <td>
+          <form method="post" action="/officer/approvals/{{this.id}}/approve">
+            <button class="btn btn-teal sm" type="submit">อนุมัติ</button>
+          </form>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+{{else}}
+<div class="empty"><span class="empty-ic">{{{icon "check"}}}</span>ไม่มีคำขอรออนุมัติ</div>
+{{/if}}
+
+{{> shell_bottom}}

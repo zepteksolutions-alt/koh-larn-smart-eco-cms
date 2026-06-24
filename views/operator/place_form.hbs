@@ -1,0 +1,76 @@
+{{> shell_top}}
+
+<form method="post" action="{{action}}" class="form-card">
+  <div class="field-row">
+    <label>ประเภทสถานที่</label>
+    <div class="type-pick">
+      <label class="type-opt"><input type="radio" name="type" value="hotel" {{#if (eq place.type 'hotel')}}checked{{else}}{{#unless place}}checked{{/unless}}{{/if}}><span class="to-ic">{{{icon "hotel"}}}</span><span>โรงแรม</span></label>
+      <label class="type-opt"><input type="radio" name="type" value="restaurant" {{#if (eq place.type 'restaurant')}}checked{{/if}}><span class="to-ic">{{{icon "restaurant"}}}</span><span>ร้านอาหาร</span></label>
+      <label class="type-opt"><input type="radio" name="type" value="place" {{#if (eq place.type 'place')}}checked{{/if}}><span class="to-ic">{{{icon "place"}}}</span><span>สถานที่ท่องเที่ยว</span></label>
+    </div>
+  </div>
+
+  <div class="field-row">
+    <label>ชื่อสถานที่</label>
+    <input class="field" name="name" value="{{place.name}}" placeholder="เช่น Sea View Resort" required>
+  </div>
+
+  <div class="two-col">
+    <div class="field-row">
+      <label>พื้นที่ / หาด</label>
+      <input class="field" name="area" value="{{place.area}}" placeholder="เช่น หาดตาแหวน" required>
+    </div>
+    <div class="field-row">
+      <label>ราคา/คืน (ถ้ามี)</label>
+      <input class="field" name="price" value="{{place.price}}" placeholder="เช่น 1500">
+    </div>
+  </div>
+
+  <div class="field-row">
+    <label>รายละเอียด</label>
+    <textarea class="field" name="description" rows="4" placeholder="อธิบายจุดเด่นของสถานที่" required>{{place.description}}</textarea>
+  </div>
+
+  <div class="field-row">
+    <label>ลิงก์ Google Maps</label>
+    <input class="field" name="mapUrl" value="{{place.mapUrl}}" placeholder="วางลิงก์ เช่น https://maps.app.goo.gl/...">
+    <p class="field-help">เปิด Google Maps ค้นหาสถานที่ กด "แชร์" แล้วคัดลอกลิงก์มาวาง</p>
+  </div>
+
+  <div class="field-row">
+    <label>รูปภาพสถานที่</label>
+    <input type="file" id="imgInput" accept="image/*" multiple hidden onchange="previewImgs(this)">
+    <div class="img-uploader">
+      <button type="button" class="btn btn-ghost" onclick="document.getElementById('imgInput').click()">
+        <span class="btn-ic">{{{icon "add"}}}</span>เพิ่มรูปภาพ
+      </button>
+      <span class="field-help">รองรับ JPG, PNG เลือกได้หลายรูป</span>
+    </div>
+    <div class="img-preview" id="imgPreview"></div>
+  </div>
+
+  <div class="info-banner"><span class="inline-ic">{{{icon "info"}}}</span>เมื่อบันทึก ระบบจะส่งคำขอให้เจ้าหน้าที่อนุมัติก่อน จึงจะแสดงบนแอป</div>
+
+  <div class="form-actions">
+    <a class="btn btn-ghost" href="/operator">ยกเลิก</a>
+    <button class="btn btn-teal" type="submit">บันทึกและส่งอนุมัติ</button>
+  </div>
+</form>
+
+<script>
+  function previewImgs(input){
+    var box = document.getElementById('imgPreview');
+    box.innerHTML = '';
+    Array.prototype.forEach.call(input.files, function(f){
+      if (!f.type.startsWith('image/')) return;
+      var wrap = document.createElement('div');
+      wrap.className = 'thumb';
+      var img = document.createElement('img');
+      img.src = URL.createObjectURL(f);
+      wrap.appendChild(img);
+      box.appendChild(wrap);
+    });
+  }
+</script>
+
+{{> shell_bottom}}

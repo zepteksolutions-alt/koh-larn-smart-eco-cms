@@ -1,0 +1,16 @@
+    </div>
+  </main>
+</div>
+<script>
+  function toggleMore(btn){
+    var p = btn.parentNode.querySelector('.desc');
+    var on = p.classList.toggle('expanded');
+    btn.textContent = on ? 'ย่อ' : 'อ่านเพิ่มเติม';
+  }
+  document.querySelectorAll('.desc.clamp').forEach(function(p){
+    var more = p.parentNode.querySelector('.more-link');
+    if (more && p.scrollHeight > p.clientHeight + 2) more.hidden = false;
+  });
+</script>
+</body>
+</html>

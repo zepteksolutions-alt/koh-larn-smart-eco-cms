@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>สมัครสมาชิก · Koh Larn CMS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body class="login-body">
+  <div class="login-card">
+    <div class="login-head">
+      <div class="logo-lg">{{{icon "island"}}}</div>
+      <h2>สมัครสมาชิกผู้ประกอบการ</h2>
+      <p>สร้างบัญชีเพื่อเพิ่มโรงแรม ร้านอาหาร หรือสถานที่</p>
+    </div>
+
+    {{#if error}}
+      <div class="alert">
+        {{#if (eq error 'missing')}}กรุณากรอกข้อมูลให้ครบถ้วน{{/if}}
+        {{#if (eq error 'email')}}รูปแบบอีเมลไม่ถูกต้อง{{/if}}
+        {{#if (eq error 'pwd')}}รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร{{/if}}
+        {{#if (eq error 'dup')}}อีเมลนี้ถูกใช้งานแล้ว{{/if}}
+      </div>
+    {{/if}}
+
+    <form method="post" action="/register" class="login-form">
+      <label>ชื่อกิจการ / ร้าน</label>
+      <div class="input-ic">
+        <span class="ic">{{{icon "user"}}}</span>
+        <input type="text" name="name" class="field" placeholder="เช่น Sea View Resort" required>
+      </div>
+      <label>อีเมล</label>
+      <div class="input-ic">
+        <span class="ic">{{{icon "mail"}}}</span>
+        <input type="email" name="email" class="field" placeholder="you@example.com" required>
+      </div>
+      <label>รหัสผ่าน <span class="lbl-note">(อย่างน้อย 6 ตัวอักษร)</span></label>
+      <div class="input-ic">
+        <span class="ic">{{{icon "lock"}}}</span>
+        <input type="password" name="password" class="field" placeholder="ตั้งรหัสผ่าน" required minlength="6">
+      </div>
+      <label>เบอร์ติดต่อ <span class="lbl-note">(ไม่บังคับ)</span></label>
+      <div class="input-ic">
+        <span class="ic">{{{icon "phone"}}}</span>
+        <input type="text" name="contact" class="field" placeholder="เช่น คุณสมชาย 081-xxx-xxxx">
+      </div>
+      <button class="btn btn-teal btn-block" type="submit">สมัครสมาชิก</button>
+      <p class="hint">มีบัญชีอยู่แล้ว? <a href="/login" class="link">เข้าสู่ระบบ</a></p>
+    </form>
+  </div>
+</body>
+</html>

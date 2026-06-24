@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{title}} · Koh Larn CMS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">{{{icon "island"}}}</div>
+      <div class="brand-txt"><b>Koh Larn</b><small>Smart Eco · CMS</small></div>
+    </div>
+    <nav class="side-nav">
+      {{#if (eq user.role 'officer')}}
+        <a href="/officer" class="{{#if (eq active 'home')}}on{{/if}}"><span class="ni">{{{icon "dashboard"}}}</span><span class="nt">ภาพรวมระบบ</span></a>
+        <a href="/officer/approvals" class="{{#if (eq active 'approvals')}}on{{/if}}"><span class="ni">{{{icon "approvals"}}}</span><span class="nt">อนุมัติสถานที่</span>{{#if pendingCount}}<span class="badge-num">{{pendingCount}}</span>{{/if}}</a>
+        <a href="/officer/places" class="{{#if (eq active 'places')}}on{{/if}}"><span class="ni">{{{icon "places"}}}</span><span class="nt">สถานที่ทั้งหมด</span></a>
+        <a href="/officer/news" class="{{#if (eq active 'news')}}on{{/if}}"><span class="ni">{{{icon "news"}}}</span><span class="nt">จัดการข่าวสาร</span></a>
+      {{else}}
+        <a href="/operator" class="{{#if (eq active 'home')}}on{{/if}}"><span class="ni">{{{icon "home"}}}</span><span class="nt">สถานที่ของฉัน</span></a>
+        <a href="/operator/places/new" class="{{#if (eq active 'add')}}on{{/if}}"><span class="ni">{{{icon "add"}}}</span><span class="nt">เพิ่มสถานที่</span></a>
+      {{/if}}
+    </nav>
+    <a class="logout" href="/logout"><span class="ni">{{{icon "logout"}}}</span><span class="nt">ออกจากระบบ</span></a>
+  </aside>
+  <main class="main">
+    <header class="topbar">
+      <h1>{{title}}</h1>
+      <div class="who">
+        <span class="role-pill {{user.role}}">{{#if (eq user.role 'officer')}}เจ้าหน้าที่{{else}}ผู้ประกอบการ{{/if}}</span>
+        <span class="who-name">{{user.name}}</span>
+        <div class="who-av">{{#if (eq user.role 'officer')}}จ{{else}}ผ{{/if}}</div>
+      </div>
+    </header>
+    <div class="content">

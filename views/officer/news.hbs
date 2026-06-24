@@ -1,0 +1,39 @@
+{{> shell_top}}
+
+<div class="card-head">
+  <h2>ข่าวสาร / ประกาศ</h2>
+  <a class="btn btn-teal" href="/officer/news/new">+ เพิ่มข่าว</a>
+</div>
+
+<div class="news-list">
+  {{#each news}}
+  <div class="news-row">
+    <div class="nr-img" style="background-image:url('{{this.image}}')"></div>
+    <div class="nr-body">
+      <div class="nr-top">
+        <span class="cat-tag {{this.category}}">
+          {{#if (eq this.category 'city')}}ประกาศเมือง{{/if}}
+          {{#if (eq this.category 'utility')}}สาธารณูปโภค{{/if}}
+          {{#if (eq this.category 'event')}}กิจกรรม{{/if}}
+        </span>
+        <span class="status {{#if (eq this.status 'published')}}approved{{else}}pending{{/if}}">
+          {{#if (eq this.status 'published')}}เผยแพร่แล้ว{{else}}ฉบับร่าง{{/if}}
+        </span>
+      </div>
+      <h3>{{this.title}}</h3>
+      <p class="desc">{{this.body}}</p>
+      <div class="nr-actions">
+        <a class="btn btn-ghost sm" href="/officer/news/{{this.id}}/edit">แก้ไข</a>
+        <form method="post" action="/officer/news/{{this.id}}/toggle">
+          <button class="btn btn-soft sm" type="submit">{{#if (eq this.status 'published')}}เก็บเป็นฉบับร่าง{{else}}เผยแพร่{{/if}}</button>
+        </form>
+        <form method="post" action="/officer/news/{{this.id}}/delete" onsubmit="return confirm('ลบข่าวนี้?')">
+          <button class="btn btn-danger sm" type="submit">ลบ</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+
+{{> shell_bottom}}
